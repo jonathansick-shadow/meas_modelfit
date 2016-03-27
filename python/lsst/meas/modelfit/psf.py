@@ -31,13 +31,13 @@ class ShapeletPsfApproxConfig(lsst.pex.config.Config):
         keytype=str,
         itemtype=modelfitLib.PsfFitterConfig,
         doc="a dictionary of models that can be used to fit the PSF",
-        default={} # populated in setDefaults; can't do it on a single line here
-        )
+        default={}  # populated in setDefaults; can't do it on a single line here
+    )
     sequence = lsst.pex.config.ListField(
         dtype=str,
         doc="a sequence of model names indicating which models should be fit, and their order",
         default=["DoubleShapelet"]
-        )
+    )
 
     def setDefaults(self):
         super(ShapeletPsfApproxConfig, self).setDefaults()
@@ -70,6 +70,7 @@ class ShapeletPsfApproxConfig(lsst.pex.config.Config):
             if m not in self.models:
                 raise KeyError("All elements in sequence must be keys in models dict")
 
+
 class ShapeletPsfApproxMixin(object):
     """Mixin base class for fitting shapelet approximations to the PSF model
 
@@ -92,7 +93,8 @@ class ShapeletPsfApproxMixin(object):
         """
         self.sequence = []
         for m in config.sequence:
-            fitter = modelfitLib.PsfFitterAlgorithm(config.models[m].makeControl(), schema, schema[name][m].getPrefix())
+            fitter = modelfitLib.PsfFitterAlgorithm(
+                config.models[m].makeControl(), schema, schema[name][m].getPrefix())
             self.sequence.append((fitter, schema[name][m].getPrefix()))
 
     def measure(self, measRecord, exposure):
@@ -134,11 +136,13 @@ class ShapeletPsfApproxMixin(object):
     def fail(self, measRecord, error=None):
         pass
 
+
 class ShapeletPsfApproxSingleFrameConfig(lsst.meas.base.SingleFramePluginConfig, ShapeletPsfApproxConfig):
 
     def setDefaults(self):
         lsst.meas.base.SingleFramePluginConfig.setDefaults(self)
         ShapeletPsfApproxConfig.setDefaults(self)
+
 
 @lsst.meas.base.register("modelfit_ShapeletPsfApprox")
 class ShapeletPsfApproxSingleFramePlugin(lsst.meas.base.SingleFramePlugin, ShapeletPsfApproxMixin):
@@ -163,11 +167,13 @@ class ShapeletPsfApproxSingleFramePlugin(lsst.meas.base.SingleFramePlugin, Shape
     def fail(self, measRecord, error=None):
         ShapeletPsfApproxMixin.fail(self, measRecord, error)
 
+
 class ShapeletPsfApproxForcedConfig(lsst.meas.base.ForcedPluginConfig, ShapeletPsfApproxConfig):
 
     def setDefaults(self):
         lsst.meas.base.ForcedPluginConfig.setDefaults(self)
         ShapeletPsfApproxConfig.setDefaults(self)
+
 
 @lsst.meas.base.register("modelfit_ShapeletPsfApprox")
 class ShapeletPsfApproxForcedPlugin(lsst.meas.base.ForcedPlugin, ShapeletPsfApproxMixin):

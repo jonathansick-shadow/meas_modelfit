@@ -29,6 +29,7 @@ from .measureImage import MeasureImageTask
 
 __all__ = ("MeasureCoaddConfig", "MeasureCoaddTask")
 
+
 class MeasureCoaddConfig(MeasureImageTask.ConfigClass):
     """Config for ProcessCoadd"""
     coaddName = lsst.pex.config.Field(
@@ -36,6 +37,7 @@ class MeasureCoaddConfig(MeasureImageTask.ConfigClass):
         dtype = str,
         default = "deep",
     )
+
 
 class MeasureCoaddTask(MeasureImageTask):
     """Specialization of MeasureImageTask for running on coadds, after processCoadd.py

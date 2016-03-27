@@ -31,16 +31,18 @@ from . import modelfitLib
 
 __all__ = ("OptimizerConfig", "OptimizerTask")
 
+
 @lsst.pex.config.wrap(modelfitLib.OptimizerControl)
 class OptimizerConfig(lsst.pex.config.Config):
     doRecordHistory = lsst.pex.config.Field(
         dtype=bool, default=False,
         doc="Whether to save optimizer tracks in the samples table"
-        )
+    )
     doRecordDerivatives = lsst.pex.config.Field(
         dtype=bool, default=True,
         doc="Whether to save derivatives with history (ignored if doRecordHistory is False)"
-        )
+    )
+
 
 class OptimizerTask(lsst.pipe.base.Task):
     """A 'fitter' subtask for Measure tasks that uses a greedy optimizer.
@@ -64,7 +66,7 @@ class OptimizerTask(lsst.pipe.base.Task):
         if self.config.doRecordHistory:
             self.recorder = modelfitLib.OptimizerHistoryRecorder(
                 self.sampleSchema, model, self.config.doRecordDerivatives
-                )
+            )
         else:
             self.recorder = None
         if previous is not None:

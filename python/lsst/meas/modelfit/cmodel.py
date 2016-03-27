@@ -25,6 +25,7 @@ import lsst.pex.config
 import lsst.meas.base
 from . import modelfitLib
 
+
 class CModelSingleFrameConfig(lsst.meas.base.SingleFramePluginConfig, modelfitLib.CModelConfig):
 
     def setDefaults(self):
@@ -55,11 +56,13 @@ class CModelSingleFramePlugin(lsst.meas.base.SingleFramePlugin):
     def fail(self, measRecord, error=None):
         self.algorithm.fail(measRecord, error.cpp if error is not None else None)
 
+
 class CModelForcedConfig(lsst.meas.base.ForcedPluginConfig, modelfitLib.CModelConfig):
 
     def setDefaults(self):
         lsst.meas.base.ForcedPluginConfig.setDefaults(self)
         modelfitLib.CModelConfig.setDefaults(self)
+
 
 @lsst.meas.base.register("modelfit_CModel")
 class CModelForcedPlugin(lsst.meas.base.ForcedPlugin):

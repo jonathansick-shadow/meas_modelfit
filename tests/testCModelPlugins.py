@@ -66,7 +66,8 @@ class CModelTestCase(AlgorithmTestCase):
         Science-quality tests either in testCModel.py (where we call the same code via a different interface)
         or something we have to do statistically on real data.
         """
-        if truthCat is None: truthCat = measCat
+        if truthCat is None:
+            truthCat = measCat
         for measRecord, truthRecord in zip(measCat, truthCat):
             trueFlux = truthRecord.get("truth_flux")
             self.assertFalse(measRecord.get("modelfit_CModel_initial_flag"))
@@ -120,6 +121,7 @@ def suite():
     suites += unittest.makeSuite(CModelTestCase)
     suites += unittest.makeSuite(lsst.utils.tests.MemoryTestCase)
     return unittest.TestSuite(suites)
+
 
 def run(shouldExit=False):
     """Run the tests"""

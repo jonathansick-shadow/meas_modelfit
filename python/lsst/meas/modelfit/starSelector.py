@@ -24,6 +24,7 @@ import lsst.pex.config
 import lsst.meas.algorithms
 from lsst.meas.algorithms.starSelectorRegistry import starSelectorRegistry
 
+
 class S13StarSelectorConfig(lsst.pex.config.Config):
     fluxMin = lsst.pex.config.Field(
         doc = "specify the minimum apFlux for good PsfCandidates",
@@ -42,9 +43,10 @@ class S13StarSelectorConfig(lsst.pex.config.Config):
         default = 0,
     )
 
+
 class S13StarSelector(object):
     ConfigClass = S13StarSelectorConfig
-    usesMatches = False # selectStars does not use its matches argument
+    usesMatches = False  # selectStars does not use its matches argument
 
     def __init__(self, config):
         self.config = config
